@@ -4,5 +4,7 @@ import geopandas as gpd # To handle geographic vector data (shapefiles or geojso
 import numpy as np # To perform numerical operations on the raster data, such as calculating the NDVI
 import matplotlib.pyplot as plt # To visualize the NDVI results
 
-#DATA ADQUISITION
-# Load the satellite image (assuming it's a multi-band image with Red and NIR bands)
+#DATA ADQUISITION https://earthexplorer.usgs.gov
+satellite_image_path = '/data/raw/landsatSummer.tif'
+satellite_image = ras.open(satellite_image_path)
+
