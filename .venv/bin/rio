@@ -1,0 +1,6 @@
+#!/Users/nbm/Desktop/plattdev/pyGIS/NDVIpalma/.venv/bin/python3.12
+import sys
+from rasterio.rio.main import main_group
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(main_group())
