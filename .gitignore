@@ -1,0 +1,85 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code settings
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Large files
+*.tif
+*.tiff
+*.zip
+*.tar.gz
+*.tar
+*.rar
+*.7z
+*.hdf
+*.h5
+*.nc
+*.csv
+*.geojson
+*.shp
+*.dbf
+*.prj
+*.cpg
+*.qgs
+*.aux
+*.ovr
+*.xml
+*.json
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.gif
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.log
+*.bak
+*.tmp
+
+# Ignore all files in data/ and output/ folders
+/data/
+/output/
