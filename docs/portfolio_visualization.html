@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NDVI Analysis — Mallorca | Portfolio</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+
+      header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 60px 40px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      header p {
+        font-size: 1.1em;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 40px;
+      }
+
+      section {
+        margin-bottom: 50px;
+      }
+
+      section h2 {
+        color: #2c3e50;
+        border-left: 4px solid #3498db;
+        padding-left: 15px;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+      }
+
+      .project-highlights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+
+      .highlight-card {
+        background: #f8f9fa;
+        border-left: 4px solid #3498db;
+        padding: 20px;
+        border-radius: 8px;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .highlight-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.15);
+      }
+
+      .highlight-card h3 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .highlight-card p {
+        color: #555;
+        line-height: 1.6;
+        font-size: 0.95em;
+      }
+
+      .emoji {
+        font-size: 1.3em;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 30px 0;
+      }
+
+      .metric {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .metric .value {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .metric .label {
+        font-size: 0.9em;
+        opacity: 0.9;
+      }
+
+      .classification-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .classification-table th {
+        background: #2c3e50;
+        color: white;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .classification-table td {
+        padding: 12px;
+        border-bottom: 1px solid #ecf0f1;
+      }
+
+      .classification-table tr:hover {
+        background: #f8f9fa;
+      }
+
+      .color-swatch {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        margin-right: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        vertical-align: middle;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .tech-tag {
+        background: #ecf0f1;
+        border-left: 3px solid #3498db;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #2c3e50;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 15px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        cursor: pointer;
+        border: none;
+        font-size: 1em;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #ecf0f1;
+        color: #2c3e50;
+        border: 1px solid #bdc3c7;
+      }
+
+      .btn-secondary:hover {
+        background: #d5dbdb;
+      }
+
+      .insights {
+        background: #e8f4f8;
+        border-left: 4px solid #3498db;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+
+      .insights h3 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .insights ul {
+        margin-left: 20px;
+        line-height: 1.8;
+      }
+
+      .insights li {
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 30px;
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .gallery-item {
+        background: #f8f9fa;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .gallery-item:hover {
+        transform: scale(1.05);
+      }
+
+      .gallery-item-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3em;
+        color: white;
+      }
+
+      .gallery-item-text {
+        padding: 15px;
+      }
+
+      .gallery-item h3 {
+        color: #2c3e50;
+        margin-bottom: 5px;
+        font-size: 1em;
+      }
+
+      .gallery-item p {
+        color: #777;
+        font-size: 0.85em;
+      }
+
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 1.8em;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🛰️ NDVI Analysis — Mallorca</h1>
+        <p>
+          Seasonal Vegetation Health Analysis using Landsat 8 Satellite Imagery
+        </p>
+      </header>
+
+      <div class="content">
+        <!-- Project Overview -->
+        <section>
+          <h2>📊 Project Overview</h2>
+          <p>
+            This geospatial analysis project compares vegetation health (NDVI)
+            between summer and winter on Mallorca using Landsat 8 Collection 2
+            Level-2 satellite data. The study captures how 2026's above-average
+            Mediterranean precipitation translates into vegetation patterns,
+            providing insights into seasonal vegetation dynamics and climate
+            resilience.
+          </p>
+
+          <div class="project-highlights">
+            <div class="highlight-card">
+              <h3><span class="emoji">🌍</span> Geospatial Analysis</h3>
+              <p>
+                Multi-spectral satellite imagery processing with automated
+                mosaicking, clipping, and reprojection to administrative
+                boundaries.
+              </p>
+            </div>
+            <div class="highlight-card">
+              <h3><span class="emoji">📈</span> NDVI Calculation</h3>
+              <p>
+                Normalized Difference Vegetation Index computation from Landsat
+                8 bands, generating continuous and classified rasters.
+              </p>
+            </div>
+            <div class="highlight-card">
+              <h3><span class="emoji">🗺️</span> Seasonal Comparison</h3>
+              <p>
+                Summer vs. Winter analysis revealing vegetation response to
+                Mediterranean rainfall patterns in a wet year.
+              </p>
+            </div>
+            <div class="highlight-card">
+              <h3><span class="emoji">💾</span> Multi-Format Export</h3>
+              <p>
+                Outputs in GeoTIFF (raster), GeoPackage (vector), and PNG
+                (visualization) for diverse GIS workflows.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Metrics -->
+        <section>
+          <h2>📍 Analysis Metrics</h2>
+          <div class="metrics">
+            <div class="metric">
+              <div class="value">1</div>
+              <div class="label">Island Coverage</div>
+            </div>
+            <div class="metric">
+              <div class="value">2</div>
+              <div class="label">Seasons Analyzed</div>
+            </div>
+            <div class="metric">
+              <div class="value">5</div>
+              <div class="label">Vegetation Classes</div>
+            </div>
+            <div class="metric">
+              <div class="value">30m</div>
+              <div class="label">Pixel Resolution</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Classification Schema -->
+        <section>
+          <h2>🎨 Vegetation Classification Schema</h2>
+          <p>
+            NDVI values are classified into five distinct vegetation categories:
+          </p>
+          <table class="classification-table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>NDVI Range</th>
+                <th>Color</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="color-swatch" style="background: #4575b4"></span
+                  >Water/Barren
+                </td>
+                <td>−1.0 to 0.0</td>
+                <td>Blue</td>
+                <td>Water bodies, bare rock, urban areas</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="color-swatch" style="background: #ffffbf"></span
+                  >Sparse/Urban
+                </td>
+                <td>0.0 to 0.2</td>
+                <td>Light Yellow</td>
+                <td>Sparse vegetation, built areas</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="color-swatch" style="background: #a6d96a"></span
+                  >Moderate Veg.
+                </td>
+                <td>0.2 to 0.4</td>
+                <td>Light Green</td>
+                <td>Grassland, shrubland, pastures</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="color-swatch" style="background: #66bd63"></span
+                  >Healthy Veg.
+                </td>
+                <td>0.4 to 0.6</td>
+                <td>Green</td>
+                <td>Forests, agricultural crops</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="color-swatch" style="background: #1a7837"></span
+                  >Dense Veg.
+                </td>
+                <td>0.6 to 1.0+</td>
+                <td>Dark Green</td>
+                <td>Very healthy forests, riparian zones</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Climate Context -->
+        <section>
+          <h2>🌧️ 2026: A Wet Year</h2>
+          <div class="insights">
+            <h3>Why This Analysis Matters</h3>
+            <ul>
+              <li>
+                <strong>Above-average winter precipitation</strong> across the
+                Mediterranean led to exceptional vegetation productivity in 2026
+              </li>
+              <li>
+                <strong>Seasonal greening response:</strong> Areas that respond
+                strongly to rainfall show pronounced summer NDVI peaks when
+                moisture from winter rains fuels photosynthetic activity
+              </li>
+              <li>
+                <strong>Climate resilience baseline:</strong> This wet-year
+                analysis provides a reference point for comparing future
+                droughts or anomalous precipitation events
+              </li>
+              <li>
+                <strong>Land management insights:</strong> Identifying which
+                ecosystems are most water-responsive helps prioritize
+                conservation and irrigation planning
+              </li>
+              <li>
+                <strong>Urbanization patterns:</strong> Built-up areas show
+                minimal seasonal variation, highlighting the ecological impact
+                of development
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Technology Stack -->
+        <section>
+          <h2>🛠️ Technology & Workflow</h2>
+          <div class="tech-stack">
+            <span class="tech-tag">Python 3.9+</span>
+            <span class="tech-tag">Rasterio (raster I/O)</span>
+            <span class="tech-tag">Geopandas (vector data)</span>
+            <span class="tech-tag">NumPy (numerical computing)</span>
+            <span class="tech-tag">Matplotlib (visualization)</span>
+            <span class="tech-tag">Shapely (geometry ops)</span>
+            <span class="tech-tag">Landsat 8 Collection 2 L2</span>
+          </div>
+
+          <h3 style="margin-top: 25px; color: #2c3e50">Workflow Steps:</h3>
+          <ol style="margin-left: 20px; line-height: 2; color: #555">
+            <li>
+              Auto-detect and categorize satellite scenes by season (May–Oct
+              summer, Nov–Apr winter)
+            </li>
+            <li>
+              Load Landsat 8 Red (B4) and NIR (B5) bands for multiple scenes
+            </li>
+            <li>Mosaic multiple tiles into seamless coverage</li>
+            <li>Clip to island administrative boundaries</li>
+            <li>
+              Apply Landsat C2 L2 scale factors (uint16 → surface reflectance)
+            </li>
+            <li>Compute NDVI: (NIR − Red) / (NIR + Red)</li>
+            <li>Calculate seasonal difference: Summer NDVI − Winter NDVI</li>
+            <li>Classify into five vegetation categories</li>
+            <li>
+              Export continuous rasters (GeoTIFF) and classified vectors
+              (GeoPackage)
+            </li>
+            <li>Generate publication-ready visualizations (PNG)</li>
+          </ol>
+        </section>
+
+        <!-- Outputs -->
+        <section>
+          <h2>📦 Project Outputs</h2>
+          <div class="gallery">
+            <div class="gallery-item">
+              <div class="gallery-item-image">📊</div>
+              <div class="gallery-item-text">
+                <h3>Continuous NDVI Maps</h3>
+                <p>
+                  High-resolution summer and winter NDVI rasters with difference
+                  maps (GeoTIFF, 30m resolution)
+                </p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-item-image">🎨</div>
+              <div class="gallery-item-text">
+                <h3>Classified Maps</h3>
+                <p>
+                  Five-class vegetation categories with color-coded legends for
+                  both seasons
+                </p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-item-image">🗺️</div>
+              <div class="gallery-item-text">
+                <h3>Vector Layers</h3>
+                <p>
+                  Classified polygons + municipality boundaries in GeoPackage
+                  format for QGIS/ArcGIS
+                </p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-item-image">📈</div>
+              <div class="gallery-item-text">
+                <h3>Visualizations</h3>
+                <p>
+                  Publication-ready PNG figures with colormaps and legends (high
+                  DPI)
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Portfolio Integration -->
+        <section>
+          <h2>🎯 Portfolio Highlights</h2>
+          <div class="insights">
+            <h3>Why Employers Notice This Project:</h3>
+            <ul>
+              <li>
+                <strong>Remote Sensing Expertise:</strong> Handles real-world
+                satellite data, not toy datasets
+              </li>
+              <li>
+                <strong>Geospatial Mastery:</strong> CRS alignment,
+                vector/raster integration, multi-format export
+              </li>
+              <li>
+                <strong>Scientific Computing:</strong> NumPy-based numerical
+                workflows with proper data handling
+              </li>
+              <li>
+                <strong>Reproducibility:</strong> Automated end-to-end pipeline,
+                clear documentation, version control
+              </li>
+              <li>
+                <strong>Business Value:</strong> Demonstrates ability to
+                translate environmental data into actionable insights
+              </li>
+              <li>
+                <strong>Code Quality:</strong> Refactored, well-commented,
+                follows best practices
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section>
+          <h2>🚀 Get Started</h2>
+          <div class="cta-buttons">
+            <a href="https://github.com" class="btn btn-primary"
+              >View on GitHub</a
+            >
+            <a href="https://github.com" class="btn btn-secondary"
+              >Read the Notebook</a
+            >
+            <a href="#" class="btn btn-secondary">View GeoPackage</a>
+          </div>
+
+          <h3 style="margin-top: 30px; color: #2c3e50">
+            Visualization Ideas for Your Portfolio:
+          </h3>
+          <ul style="margin-left: 20px; line-height: 2; color: #555">
+            <li>
+              🗺️ <strong>Interactive Web Map:</strong> Fold ium/Leaflet.js with
+              NDVI layer + toggle seasons
+            </li>
+            <li>
+              📊 <strong>Streamlit Dashboard:</strong> Real-time exploration,
+              statistics by municipality, classified areas
+            </li>
+            <li>
+              📄 <strong>GIS Report:</strong> QGIS composer export with
+              professional cartography
+            </li>
+            <li>
+              🌐 <strong>GitHub Pages Site:</strong> Host this portfolio page +
+              embed interactive maps
+            </li>
+            <li>
+              📱 <strong>Before/After Story Map:</strong> Narrative-driven
+              presentation of seasonal differences
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <footer>
+        <p>NDVI Analysis — Mallorca | Landsat 8 Collection 2 L2 | 2026</p>
+        <p>
+          Project includes refactored, production-ready Python code and
+          comprehensive Jupyter notebooks.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
